@@ -2,8 +2,14 @@ const gameContainer = document.getElementById("game");
 const cards = document.querySelectorAll('.card');
 const startBtn = document.querySelector('#startButton');
 const ReStartBtn = document.querySelector('#ReStartButton');
-
+let matchedPairs = 0;
+let score = 0;
 let selectedCards = [];
+ReStartBtn.style.display = 'none';
+const savedBestScore = localStorage.getItem('score');
+if (savedBestScore) {
+  document.getElementById('bestScore').innerText = 'Best Score: ' + savedBestScore;
+}
 
 const COLORS = [
   "red",
@@ -64,8 +70,7 @@ function createDivsForColors(colorArray) {
 
 // TODO: Implement this function!
 function handleCardClick(event) {
-
-  
+ 
   // Check if the same card is clicked twice
   if (selectedCards.length > 0 && (selectedCards[0].element === event.target )) {
     console.log('Same card clicked!');
@@ -76,11 +81,12 @@ function handleCardClick(event) {
 }
 
   // you can use event.target to see which element was clicked
+  score++;
   let color = event.target.className;
   event.target.style.backgroundColor = color // Show the color of the card when clicked
   selectedCards.push({element: event.target, color: color});
   console.log("you just clicked", color);
-  console.log(divsWithStyle.length)
+  document.getElementById('score').innerText = 'Score: ' + score;
   if (selectedCards.length === 2) {
     cards.forEach(card => {
       card.classList.add('no-click');
@@ -99,8 +105,18 @@ function handleCardClick(event) {
 
 function compareCards(cards) {
   if (cards[0].color === cards[1].color) {
-      console.log('Match!');
-      // You can add any specific actions for the match case
+    console.log('Match!');
+    matchedPairs++;  // Increment the matched pairs counter when a match is found
+    // You can add any specific actions for the match case
+
+    // Check if the game is finished
+    if (matchedPairs === COLORS.length / 2) {
+      ReStartBtn.style.display = 'inline-block';
+      alert('Game finished! All pairs have been matched.');
+      lowScore(score);
+      // Here you can also add code to show some kind of "game over" or "congratulations" message to the player
+    }
+
   } else {
       console.log('No Match!');
       // Hide the colors again if they don't match, or another specific action
@@ -110,15 +126,28 @@ function compareCards(cards) {
   }
 }
 
+function lowScore(score){
+  let currentLowScore = parseInt(localStorage.getItem('score')) || 0;
+  if (score < currentLowScore || currentLowScore === 0){
+    localStorage.setItem('score', score.toString());
+    document.getElementById('bestScore').innerText = 'Best Score: ' + score;
+  }
+}
+
 startBtn.addEventListener('click', function(e){
   console.log('start game');
   // when the DOM loads
+  startBtn.style.display = 'none';
   createDivsForColors(shuffledColors);
 })
 
 ReStartBtn.addEventListener('click', function(e){
   console.log('restart game');
+  matchedPairs = 0;
+  score = 0;
+  document.getElementById('score').innerText = 'Score: ' + score;
   gameContainer.innerHTML= '';
+  ReStartBtn.style.display = 'none';
   // when the DOM loads
   createDivsForColors(shuffledColors);
 })
