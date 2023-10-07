@@ -1,5 +1,8 @@
 const gameContainer = document.getElementById("game");
 const cards = document.querySelectorAll('.card');
+const startBtn = document.querySelector('#startButton');
+const ReStartBtn = document.querySelector('#ReStartButton');
+
 let selectedCards = [];
 
 const COLORS = [
@@ -61,19 +64,23 @@ function createDivsForColors(colorArray) {
 
 // TODO: Implement this function!
 function handleCardClick(event) {
+
+  
   // Check if the same card is clicked twice
-  if (selectedCards.length > 0 && (selectedCards[0].element === event.target ||  selectedCards.length === 2)) {
-    console.log('Same card clicked OR more than 2 cards clicked!');
+  if (selectedCards.length > 0 && (selectedCards[0].element === event.target )) {
+    console.log('Same card clicked!');
+    return; // Exit the function if the same card is clicked
+} else if (selectedCards.length === 2) {
+    console.log('More than 2 cards clicked!');
     return; // Exit the function if the same card is clicked
 }
 
   // you can use event.target to see which element was clicked
-  
   let color = event.target.className;
   event.target.style.backgroundColor = color // Show the color of the card when clicked
   selectedCards.push({element: event.target, color: color});
   console.log("you just clicked", color);
-
+  console.log(divsWithStyle.length)
   if (selectedCards.length === 2) {
     cards.forEach(card => {
       card.classList.add('no-click');
@@ -99,8 +106,20 @@ function compareCards(cards) {
       // Hide the colors again if they don't match, or another specific action
       cards[0].element.style.backgroundColor = '';
       cards[1].element.style.backgroundColor = '';
+
   }
 }
 
-// when the DOM loads
-createDivsForColors(shuffledColors);
+startBtn.addEventListener('click', function(e){
+  console.log('start game');
+  // when the DOM loads
+  createDivsForColors(shuffledColors);
+})
+
+ReStartBtn.addEventListener('click', function(e){
+  console.log('restart game');
+  gameContainer.innerHTML= '';
+  // when the DOM loads
+  createDivsForColors(shuffledColors);
+})
+
