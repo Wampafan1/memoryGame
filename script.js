@@ -27,24 +27,8 @@ function createColors(){
     newColors.push(newColor);
     newColors.push(newColor);
   }
-  console.log(newColors)
   return newColors
 }
-
-// const COLORS = [
-//   "red",
-//   "rgb(3,252,32)",
-//   "rgb(3,252,32)",
-//   "blue",
-//   "green",
-//   "orange",
-//   "purple",
-//   "red",
-//   "blue",
-//   "green",
-//   "orange",
-//   "purple"
-// ];
 
 // here is a helper function to shuffle an array
 // it returns the same array with values shuffled
@@ -106,7 +90,7 @@ function handleCardClick(event) {
   let color = event.target.className;
   event.target.style.backgroundColor = color // Show the color of the card when clicked
   selectedCards.push({element: event.target, color: color});
-  console.log("you just clicked", color);
+  // console.log("you just clicked", color);
   document.getElementById('score').innerText = 'Score: ' + score;
   if (selectedCards.length === 2) {
     cards.forEach(card => {
