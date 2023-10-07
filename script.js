@@ -22,6 +22,9 @@ function randomRGB(){
 
 function createColors(){
   let newColors = [];
+  if (colorPairs.value.trim() === '') {
+    colorPairs.value = 5;
+  }
   for(let i = 0; i<colorPairs.value; i++){
     let newColor = randomRGB();
     newColors.push(newColor);
@@ -110,11 +113,9 @@ function handleCardClick(event) {
 
 function compareCards(cards) {
   if (cards[0].color === cards[1].color) {
-    console.log('Match!');
+    // console.log('Match!');
     matchedPairs++;  // Increment the matched pairs counter when a match is found
-    // You can add any specific actions for the match case
-
-    console.log(`Matched Pairs: ${matchedPairs} | COLORS.length: ${COLORS.length}`);
+    // console.log(`Matched Pairs: ${matchedPairs} | COLORS.length: ${COLORS.length}`);
     // Check if the game is finished
     if (matchedPairs === COLORS.length / 2) {
       ReStartBtn.style.display = 'inline-block';
@@ -124,7 +125,7 @@ function compareCards(cards) {
     }
 
   } else {
-      console.log('No Match!');
+      // console.log('No Match!');
       // Hide the colors again if they don't match, or another specific action
       cards[0].element.style.backgroundColor = '';
       cards[1].element.style.backgroundColor = '';
@@ -141,7 +142,7 @@ function lowScore(score){
 }
 
 startBtn.addEventListener('click', function(e){
-  console.log('start game');
+  // console.log('start game');
   COLORS = createColors();
   let shuffledColors = shuffle(COLORS);
   // when the DOM loads
@@ -150,7 +151,7 @@ startBtn.addEventListener('click', function(e){
 })
 
 ReStartBtn.addEventListener('click', function(e){
-  console.log('restart game');
+  // console.log('restart game');
   matchedPairs = 0;
   score = 0;
   document.getElementById('score').innerText = 'Score: ' + score;
