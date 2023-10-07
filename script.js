@@ -2,27 +2,49 @@ const gameContainer = document.getElementById("game");
 const cards = document.querySelectorAll('.card');
 const startBtn = document.querySelector('#startButton');
 const ReStartBtn = document.querySelector('#ReStartButton');
+const colorPairs = document.querySelector('#game-size');
 let matchedPairs = 0;
 let score = 0;
 let selectedCards = [];
+let COLORS = 0;
 ReStartBtn.style.display = 'none';
 const savedBestScore = localStorage.getItem('score');
 if (savedBestScore) {
   document.getElementById('bestScore').innerText = 'Best Score: ' + savedBestScore;
 }
 
-const COLORS = [
-  "red",
-  "blue",
-  "green",
-  "orange",
-  "purple",
-  "red",
-  "blue",
-  "green",
-  "orange",
-  "purple"
-];
+function randomRGB(){
+  const r = Math.floor(Math.random() * 256)
+  const g = Math.floor(Math.random() * 256)
+  const b = Math.floor(Math.random() * 256)
+  return `rgb(${r},${g},${b})`
+}
+
+function createColors(){
+  let newColors = [];
+  for(let i = 0; i<colorPairs.value; i++){
+    let newColor = randomRGB();
+    newColors.push(newColor);
+    newColors.push(newColor);
+  }
+  console.log(newColors)
+  return newColors
+}
+
+// const COLORS = [
+//   "red",
+//   "rgb(3,252,32)",
+//   "rgb(3,252,32)",
+//   "blue",
+//   "green",
+//   "orange",
+//   "purple",
+//   "red",
+//   "blue",
+//   "green",
+//   "orange",
+//   "purple"
+// ];
 
 // here is a helper function to shuffle an array
 // it returns the same array with values shuffled
@@ -47,7 +69,6 @@ function shuffle(array) {
   return array;
 }
 
-let shuffledColors = shuffle(COLORS);
 
 // this function loops over the array of colors
 // it creates a new div and gives it a class with the value of the color
@@ -109,6 +130,7 @@ function compareCards(cards) {
     matchedPairs++;  // Increment the matched pairs counter when a match is found
     // You can add any specific actions for the match case
 
+    console.log(`Matched Pairs: ${matchedPairs} | COLORS.length: ${COLORS.length}`);
     // Check if the game is finished
     if (matchedPairs === COLORS.length / 2) {
       ReStartBtn.style.display = 'inline-block';
@@ -136,6 +158,8 @@ function lowScore(score){
 
 startBtn.addEventListener('click', function(e){
   console.log('start game');
+  COLORS = createColors();
+  let shuffledColors = shuffle(COLORS);
   // when the DOM loads
   startBtn.style.display = 'none';
   createDivsForColors(shuffledColors);
@@ -148,6 +172,8 @@ ReStartBtn.addEventListener('click', function(e){
   document.getElementById('score').innerText = 'Score: ' + score;
   gameContainer.innerHTML= '';
   ReStartBtn.style.display = 'none';
+  COLORS = createColors();
+  let shuffledColors = shuffle(COLORS);
   // when the DOM loads
   createDivsForColors(shuffledColors);
 })

@@ -1,3 +1,9 @@
+h1 {
+  text-align: center;
+  margin-top: 0; /* Adjust as necessary */
+  padding-top: 20px; /* Adjust as necessary */
+}
+
 #game div {
   border: 1px solid black;
   width: 15%;
@@ -13,7 +19,7 @@
 
 #score {
   position: absolute;
-  top: 10px;  /* Adjust as needed */
+  top: 60px;  /* Adjust as needed */
   right: 10px;  /* Adjust as needed */
   font-size: 24px;  /* Adjust as needed */
   z-index: 1000;  /* Adjust if needed to ensure the score displays above other elements */
@@ -21,7 +27,7 @@
 
 #bestScore {
   position: absolute;
-  top: 40px;  /* Adjust as needed */
+  top: 85px;  /* Adjust as needed */
   right: 10px;  /* Adjust as needed */
   font-size: 20px;  /* Adjust as needed */
 }
